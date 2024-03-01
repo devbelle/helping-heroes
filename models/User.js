@@ -35,6 +35,16 @@ User.init(
         len: [8],
       },
     },
+    is_banned: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+    is_admin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
   },
   {
     hooks: {

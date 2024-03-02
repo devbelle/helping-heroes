@@ -8,17 +8,17 @@ router.get('/', async (req, res) => {
     try {
     const postData = await Post.findAll({
       attributes: [
-        'id',
+        //'id',
         'title',
         'content',
         'score',
-        'user_id'
+        //'user_id'
       ],
       //including the response and the user_id of the responder
       include: [
         {
           model: Response,
-          attributes: ['id', 'content' ],
+          attributes: ['content' ],
           include: {
             model: User,
             attributes: ['user_id']
@@ -27,8 +27,8 @@ router.get('/', async (req, res) => {
         //pulls the users on teh homepage
         {
           model: User,
-          attributes: ['username', 'email'],
-          exclude: ['password']
+          attributes: ['username'],
+          //exclude: ['password', 'email']
         },
         //including tags to render on home page
         {
@@ -53,7 +53,7 @@ router.get('/', async (req, res) => {
 router.get('/', async (res, res) => {
     try {
         const tagData  = await Tag.findAll({
-            attributes: ['id', 'name'],
+            attributes: [ 'name'],
             include: [
                 {
                     model: TagPost,
@@ -129,16 +129,16 @@ router.get('/post/:id', async (req, res) => {
     try {
     const postData = await Post.findByPk(req.params.id, {
       attributes: [
-        'id',
+        //'id',
         'title',
         'content',
         'score',
-        'user_id'
+        //'user_id'
       ],
       include: [
         {
           model: Response,
-          attributes: ['id', 'content' ],
+          attributes: [ 'content' ],
           include: {
             model: User,
             attributes: ['user_id']
@@ -147,8 +147,8 @@ router.get('/post/:id', async (req, res) => {
         //pulls the users on the homepage
         {
           model: User,
-          attributes: ['username', 'email'],
-          exclude: ['password']
+          attributes: ['username'],
+          //exclude: ['password']
         },
         //including tags to render on home page
         {
@@ -175,7 +175,7 @@ router.get('/tag/:id', async (req, res) => {
     try {
     const tagData = await Tag.findByPk(req.params.id, {
       attributes: [
-        'id',
+        //'id',
         'name'
       ],
       include: [ 

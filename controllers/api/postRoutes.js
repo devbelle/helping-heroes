@@ -15,6 +15,7 @@ const { withAuth } = require('../../utils/auth');
 
 // user creates a new post
 // req.body should have "title" and "content" fields
+// return value is the new post (as JSON)
 router.post('/', withAuth, async (req, res) => {
   try {
     const newPost = await Post.create(
@@ -31,6 +32,7 @@ router.post('/', withAuth, async (req, res) => {
 
 // user deletes their own post
 // admin can delete any post
+// return value is the number of posts deleted
 router.delete('/:id', withAuth, async (req, res) => {
   try {
     let deletedPost;
@@ -43,11 +45,7 @@ router.delete('/:id', withAuth, async (req, res) => {
         where: { id: req.params.id, user_id: req.session.user_id }
       });
     }
-    if (deletedPost) {
-      res.status(200).json('Deleted');
-    } else {
-      res.status(400).json('Invalid post/user.');
-    }
+    res.status(200).json(deletedPost);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -55,6 +53,8 @@ router.delete('/:id', withAuth, async (req, res) => {
 
 // user edits their own post
 // req.body should have "title" and "content" fields
+// If successful the return value is an array with the number of
+// records/rows affected
 router.put('/:id', withAuth, async (req, res) => {
   try {
     // validation that a post by the user exists with the submitted ID

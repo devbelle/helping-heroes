@@ -13,8 +13,9 @@ const session = require('express-session');
 const { Response } = require('../../models');
 const { withAuth } = require('../../utils/auth');
 
-// create a new response
+// Create a new response
 // req.body should include "post_id" and "content" fields
+// Return value is the new post (JSON format)
 router.post('/', withAuth, async (req, res) => {
   try {
     const newResponse = await Response.create(
@@ -29,8 +30,10 @@ router.post('/', withAuth, async (req, res) => {
   }
 });
 
-// edit an existing response
+// User can edit an existing response
 // req.body should include "post_id" and "content"
+// To be successful, post_id must match the post the user is responding to
+// Successful edit returns the number of records affects (JSON array)
 router.put('/:id', withAuth, async (req, res) => {
   try {
     // validation that the response by the user exists
@@ -56,8 +59,9 @@ router.put('/:id', withAuth, async (req, res) => {
   }
 });
 
-// delete a response
-// users can delete their own response, admins can delete any response
+// Delete a response
+// Users can delete their own response, admins can delete any response
+// Return value is the number of items deleted (JSON)
 router.delete('/:id', withAuth, async (req, res) => {
   try {
     let deletedResponse;
@@ -70,11 +74,7 @@ router.delete('/:id', withAuth, async (req, res) => {
         where: { id: req.params.id, user_id: req.session.user_id }
       });
     }
-    if (deletedResponse) {
-      res.status(200).json('Deleted');
-    } else {
-      res.status(400).json('Invalid response/user');
-    }
+    res.status(200).json(deletedResponse);
   } catch (err) {
     res.status(500).json(err);
   }

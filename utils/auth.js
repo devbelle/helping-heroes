@@ -9,4 +9,14 @@ const withAuth = (req, res, next) => {
   }
 };
 
-module.exports = withAuth;
+const isAdmin = (req, res, next) => {
+  // middleware to block non-admins
+  // eventually send to a different page ("you are not admin, etc...")
+  if (!req.session.is_admin) {
+    res.redirect('/login');
+  } else {
+    next();
+  }
+}
+
+module.exports = { withAuth, isAdmin };

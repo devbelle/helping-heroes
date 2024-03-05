@@ -17,6 +17,19 @@ const seedDatabase = async () => {
     returning: true,
   });
 
+  // create one admin user for testing purposes
+  const adminUser = await User.create(
+    {
+      username: "superuser",
+      email: "admin@admin.org",
+      password: "password12345",
+      is_admin: true
+    },
+    {
+      individualHooks: true
+    }
+  );
+
   // seed tags
   const allTags = await Tag.bulkCreate(tagData);
 

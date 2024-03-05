@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
-// const routes = require('./controllers');
+const routes = require('./controllers');
 require('dotenv').config();
 
 const app = express();
@@ -17,7 +17,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sess = {
   secret: process.env.SESS_SECRET,
   cookie: {
-    maxAge: 300000,
+    maxAge: 3600000,  // 60-min time limit
     httpOnly: true,
     secure: false,
     sameSite: 'strict',
@@ -42,7 +42,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // use all routes in the controllers folder
-// app.use(routes);
+app.use(routes);
 
 // sync sequelize models to the database, then turn on the server
 sequelize.sync().then(() => {

@@ -1,0 +1,24 @@
+<div class="columns">
+<div class="column is-two-fifths">
+{{#each tags}}
+<ul><li><a id="tag-filter">{{name}}</a></li></ul>
+{{/each}}
+</div>
+<div class="column is-three fifths">
+<h1>Recent Posts:</h1>
+{{#each posts}}
+<div>
+<ul>
+<li>
+<h2>{{title}}</h2>
+<p>{{content}}</p>
+<p>Posted by: {{User.username}}</p>
+<p>Tags: #{{tag.name}}</p>
+</li>
+</ul>
+<li>
+</li>
+</div>
+{{/each}}
+</div>
+</div>

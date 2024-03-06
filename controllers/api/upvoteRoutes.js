@@ -25,20 +25,4 @@ router.post('/:id', withAuth, async (req, res) => {
   }
 });
 
-// Route counts the number of upvotes for a given response
-// The response-id is passed in the route
-// The return value is the number of upvotes for that response
-// Note that this should maybe be rewritten as a homeRoute since
-// the result will immediately be rendered somewhere
-router.get('/:id', async (req, res) => {
-  try {
-    const countUpvotes = await UserUpvote.count({
-      where: {response_id: req.params.id}
-    })
-    res.status(200).json(countUpvotes);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-})
-
 module.exports = router;

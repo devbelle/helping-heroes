@@ -1,7 +1,9 @@
+const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers');
+const helpers = require('./utils/helpers');
 require('dotenv').config();
 
 const app = express();
@@ -15,7 +17,8 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 // session options
 const sess = {
-  secret: process.env.SESS_SECRET,
+  secret: 'Super secret secret',  // needed for heroku?
+  // secret: process.env.SESS_SECRET,
   cookie: {
     maxAge: 3600000,  // 60-min time limit
     httpOnly: true,
@@ -33,13 +36,14 @@ const sess = {
 app.use(session(sess));
 
 // handlebars engine
-const hbs = exphbs.create();
+const hbs = exphbs.create({ helpers });
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 // use encoding middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // use all routes in the controllers folder
 app.use(routes);

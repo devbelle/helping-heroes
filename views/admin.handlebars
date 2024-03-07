@@ -1,2 +1,38 @@
 <!-- Display list of users, their email, # comments, # posts -->
 <!-- From here the admin can launch the user profile, view/delete comments, view/delete posts -->
+
+<h2 class="title m-2">Admin Page</h2>
+<div class="user-table">
+    <table class="table is-hoverable is-striped box">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>email</th>
+                <th>Banned?</th>
+                <th>Admin?</th>
+                <th>Posts</th>
+                <th>Responses</th>
+                <th>Signup Date</th>
+                <th>Delete User?</th>
+            </tr>
+        </thead>
+        {{#each output as |user|}}
+        <tr class="user-entry" data-id={{user.id}}>
+            <td class="username">{{user.username}}</td>
+            <td class="email"><a href="mailto:{{user.email}}">{{user.email}}</a></td>
+            <td><button class="button ban-user">{{#if user.is_banned}}yes{{else}}no{{/if}}</button></td>
+            <td><button class="button make-admin">{{#if user.is_admin}}yes{{else}}no{{/if}}</button></td>
+            <td class="has-text-centered"><a href="/admin/posts/{{user.id}}">{{user.post_count}}</a></td>
+            <td class="has-text-centered"><a href="/admin/responses/{{user.id}}">{{user.response_count}}</a></td>
+            <td>{{format_date user.signup_date}}</td>
+            <td><button class="button delete-user">Delete</button></td>
+        </tr>
+        {{/each}}
+    </table>
+    <div>
+        <a href="/admin/posts"><button class="button">All Posts</button></a>
+        <a href="/admin/responses"><button class="button">All Responses</button></a>
+    </div>
+</div>
+
+<script src="/js/admin.js"></script>

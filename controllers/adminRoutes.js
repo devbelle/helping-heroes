@@ -4,9 +4,31 @@ const router = require('express').Router();
 const session = require('express-session');
 const { Post, Response, Tag, TagPost, User, UserUpvote } = require('../models');
 const { withAuth, isAdmin } = require('../utils/auth');
-const { countUpvotes, countResponses } = require('../utils/count');
+const { countUpvotes, countResponses, countUserResponses, countUserPosts } = require('../utils/count');
 
-// TODO: all "isAdmin" middleware to all of these routes
+router.get('/', isAdmin, async (req, res) => {
+  // send a list of users, their email, signup date, num comments, num posts, isAdmin, isBanned
+  const allUsers = await User.findAll({
+    attributes: ['id', 'username', 'email', 'is_banned', 'is_admin', ['created_at', 'signup_date']]
+  });
+
+  if (allUsers.length === 0) {
+    res.send('No users found.');
+    return;
+  }
+
+  const output = allUsers.map( (user) => user.get({ plain: true }));
+
+  for (let i = 0; i < output.length; i++) {
+    output[i].post_count = await countUserPosts(output[i].id);
+    output[i].response_count = await countUserResponses(output[i].id);
+  }
+
+  // res.json(output);
+
+  res.render('admin', { output });
+
+});
 
 router.get('/responses', isAdmin, async (req, res) => {
   // get all responses with ID, date, and username
@@ -63,7 +85,7 @@ router.get('/responses/:id', isAdmin, async (req, res) => {
   res.render('adminResponses', { all: false, username: output[0].user.username, output });
 });
 
-router.get('/posts', async (req, res) => {
+router.get('/posts', isAdmin, async (req, res) => {
   // get all posts with ID, date, and username
   const allPosts = await Post.findAll({
     attributes: ['id', 'title', 'content', 'user_id', ['updated_at', 'date']],

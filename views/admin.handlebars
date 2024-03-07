@@ -1,9 +1,0 @@
-<h3 class="is-size-4">All comments</h3>
-{{#each output as |res|}}
-<div class="responses box m-2">
-    <p>{{res.content}}</p>
-    <p>Posted on {{format_date res.date}}</p>
-    <p>Response by {{res.user.username}}</p>
-    <p>Received {{res.upvotes}} upvotes</p>
-</div>
-{{/each}}

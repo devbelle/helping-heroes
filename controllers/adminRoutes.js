@@ -17,7 +17,7 @@ router.get('/', isAdmin, async (req, res) => {
     return;
   }
 
-  const output = allUsers.map( (user) => user.get({ plain: true }));
+  const output = allUsers.map((user) => user.get({ plain: true }));
 
   for (let i = 0; i < output.length; i++) {
     output[i].post_count = await countUserPosts(output[i].id);
@@ -26,8 +26,12 @@ router.get('/', isAdmin, async (req, res) => {
 
   // res.json(output);
 
-  res.render('admin', { output });
-
+  res.render('admin',
+    {
+      logged_in: req.session.logged_in,
+      is_admin: req.session.is_admin,
+      output
+    });
 });
 
 router.get('/responses', isAdmin, async (req, res) => {
@@ -54,7 +58,13 @@ router.get('/responses', isAdmin, async (req, res) => {
     output[i].upvotes = await countUpvotes(output[i].id);
   }
 
-  res.render('adminResponses', { all: true, output });
+  res.render('adminResponses',
+    {
+      all: true,
+      logged_in: req.session.logged_in,
+      is_admin: req.session.is_admin,
+      output
+    });
 });
 
 router.get('/responses/:id', isAdmin, async (req, res) => {
@@ -82,7 +92,14 @@ router.get('/responses/:id', isAdmin, async (req, res) => {
     output[i].upvotes = await countUpvotes(output[i].id);
   }
 
-  res.render('adminResponses', { all: false, username: output[0].user.username, output });
+  res.render('adminResponses',
+    {
+      all: false,
+      username: output[0].user.username,
+      logged_in: req.session.logged_in,
+      is_admin: req.session.is_admin,
+      output
+    });
 });
 
 router.get('/posts', isAdmin, async (req, res) => {
@@ -109,7 +126,13 @@ router.get('/posts', isAdmin, async (req, res) => {
     output[i].comments = await countResponses(output[i].id);
   }
 
-  res.render('adminPosts', { all: true, output });
+  res.render('adminPosts',
+    {
+      all: true,
+      logged_in: req.session.logged_in,
+      is_admin: req.session.is_admin,
+      output
+    });
 });
 
 router.get('/posts/:id', isAdmin, async (req, res) => {
@@ -138,7 +161,14 @@ router.get('/posts/:id', isAdmin, async (req, res) => {
       output[i].comments = await countResponses(output[i].id);
     }
 
-    res.render('adminPosts', { all: false, username: output[0].user.username, output });
+    res.render('adminPosts',
+      {
+        all: false,
+        username: output[0].user.username,
+        logged_in: req.session.logged_in,
+        is_admin: req.session.is_admin,
+        output
+      });
   } catch (err) {
     res.status(500).json(err);
   }

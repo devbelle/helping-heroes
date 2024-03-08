@@ -2,6 +2,14 @@
 <!-- From here the admin can launch the user profile, view/delete comments, view/delete posts -->
 
 <h2 class="title m-2">Admin Page</h2>
+
+<div class="content">
+    <ul>
+        <li>Click on the "banned" button to toggle ban</li>
+        <li>Click on numbers to see users posts/responses</li>
+    </ul>
+</div>
+
 <div class="user-table">
     <table class="table is-hoverable is-striped box">
         <thead>
@@ -20,8 +28,8 @@
         <tr class="user-entry" data-id={{user.id}}>
             <td class="username">{{user.username}}</td>
             <td class="email"><a href="mailto:{{user.email}}">{{user.email}}</a></td>
-            <td><button class="button ban-user">{{#if user.is_banned}}yes{{else}}no{{/if}}</button></td>
-            <td><button class="button make-admin">{{#if user.is_admin}}yes{{else}}no{{/if}}</button></td>
+            <td class="has-text-centered"><button class="button ban-user">{{#if user.is_banned}}yes{{else}}no{{/if}}</button></td>
+            <td class="has-text-centered">{{#if user.is_admin}}yes{{else}}no{{/if}}</td>
             <td class="has-text-centered"><a href="/admin/posts/{{user.id}}">{{user.post_count}}</a></td>
             <td class="has-text-centered"><a href="/admin/responses/{{user.id}}">{{user.response_count}}</a></td>
             <td>{{format_date user.signup_date}}</td>

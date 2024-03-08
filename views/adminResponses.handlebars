@@ -1,0 +1,16 @@
+{{#if all}}
+<h3 class="is-size-4">All responses</h3>
+{{else}}
+<h3 class="is-size-4">Responses by {{username}}</h3>
+{{/if}}
+{{#each output as |res|}}
+<div class="box">
+    <ul>
+        <li class="mb-1">{{res.content}}</li>
+        <li class="mb-1">Posted on {{format_date res.date}} by {{res.user.username}}</li>
+        <li class="mb-1">{{res.upvotes}} upvotes</li>
+    </ul>
+    <button class="button delete-response" data-id={{res.id}}>Delete</button>
+</div>
+{{/each}}
+<script src="/js/adminResponses.js"> </script>

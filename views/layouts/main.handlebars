@@ -13,16 +13,19 @@
   <body>
     <header>
       <nav>
-        <a href="../homepage.handlebars">Home</a>
-        {{#if loggedIn}}
-        <a href="">Posts</a>
-        <a href="">My Profile</a>
-        <a href="">Logout</a>
+        <a href="/"><button class="button is-link m-1">Home</button></a>
+        {{#if logged_in}}
+        <a href=""><button class="button is-link m-1">Posts</button></a>
+        <a href=""><button class="button is-link m-1">My Profile</button></a>
+        <button class="button logout is-link m-1">Logout</button>
+        {{#if is_admin}}
+        <a href="/admin"><button class="button is-link m-1">Admin</button></a>
+        {{/if}}
         {{else}}
-        <a href="../login.handlebars">Login</a>
+        <a href="/login"><button class="button is-link m-1">Login</button></a>
         {{/if}}
       </nav>
-      <h1>Welcome to Helping Heroes!</h1>
+      <h1 class="title is-size-2">Welcome to Helping Heroes!</h1>
     </header>
 
     <main class="container">

@@ -19,10 +19,6 @@ Post.init(
       type: DataTypes.TEXT,
       allowNull: false
     },
-    score: {
-      type: DataTypes.DECIMAL,
-      defaultValue: 0
-    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {

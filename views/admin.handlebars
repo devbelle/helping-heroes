@@ -25,15 +25,15 @@
             </tr>
         </thead>
         {{#each output as |user|}}
-        <tr class="user-entry" data-id={{user.id}}>
+        <tr class="user-entry">
             <td class="username">{{user.username}}</td>
             <td class="email"><a href="mailto:{{user.email}}">{{user.email}}</a></td>
-            <td class="has-text-centered"><button class="button ban-user">{{#if user.is_banned}}yes{{else}}no{{/if}}</button></td>
+            <td class="has-text-centered"><button class="button ban" data-id={{user.id}}>{{#if user.is_banned}}yes{{else}}no{{/if}}</button></td>
             <td class="has-text-centered">{{#if user.is_admin}}yes{{else}}no{{/if}}</td>
             <td class="has-text-centered"><a href="/admin/posts/{{user.id}}">{{user.post_count}}</a></td>
             <td class="has-text-centered"><a href="/admin/responses/{{user.id}}">{{user.response_count}}</a></td>
             <td>{{format_date user.signup_date}}</td>
-            <td><button class="button delete-user">Delete</button></td>
+            <td><button class="button delete-user" data-id={{user.id}}>Delete</button></td>
         </tr>
         {{/each}}
     </table>

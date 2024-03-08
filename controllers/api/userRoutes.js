@@ -105,7 +105,7 @@ router.get('/', isAdmin, async (req, res) => {
   }
 });
 
-// ban a user
+// toggle the "is_banned" state of a user
 router.put('/ban/:id', isAdmin, async (req, res) => {
   try {
     // user can't ban himself/herself
@@ -113,19 +113,22 @@ router.put('/ban/:id', isAdmin, async (req, res) => {
       res.status(400).json('Error: user cannot ban himself/herself.');
       return;
     };
-    // set is_banned flag to false
+
+    // get the current value of the flag
+    const banState = await User.findByPk(req.params.id, {attributes: ['is_banned']});
+
+    // toggle the is_banned state
     const bannedUser = await User.update(
-      { is_banned: true },
+      { is_banned: !banState.is_banned },
       { where: { id: req.params.id } }
     );
 
-    // needed?
-    if (!bannedUser[0]) {
-      res.status(400).json('User does not exist or has already been banned.');
-      return;
-    };
+    if (banState.is_banned) {
+      res.status(200).json({ message: `User ${req.params.id} is no longer banned.` })
+    } else {
+      res.status(200).json({ message: `User ${req.params.id} has been banned.` })
+    }
 
-    res.status(200).json(`User ${req.params.id} has been banned.`)
   } catch (err) {
     res.status(500).json(err);
   }

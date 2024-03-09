@@ -1,6 +1,6 @@
+{{#if logged_in}}
 <section>
     <h2>Create New Post</h2>
-    
     <form class="new-post-form">
         <div>
             <label for="post-title">Title</label>
@@ -20,9 +20,14 @@
         {{#each posts as |post|}}
         <li>
             {{> post-info post}}
+            <a href="/dashboard/single-post/{{post.id}}">{{post.title}}</a>
             <a href="/dashboard/edit-post/{{post.id}}" class="edit-link">Edit Post</a>
             <div>
-                <button class="delete-post-btn" data-id="{{post.id}}">DELETE</button>
+                <button class="delete-post-btn" data-id="{{post.id}}">DELETE POST</button>
+            </div>
+            <div>
+                <p class="mb-1">{{responses.content}}</p>
+                <p class="mb-1">{{res.upvotes}} upvotes</p>
             </div>
         </li>
         {{/each}}

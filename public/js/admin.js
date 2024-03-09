@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   // functionality to ban or delete a user
+  var options = {
+    valueNames: [ 'username', 'ban', 'posts', 'responses', 'admin' ],
+    pagination: true,
+    page: 10,
+  };
+
+  var userList = new List('users', options);
 
   const toggleBan = async (evt) => {
     // allow an admin to toggle the ban status of a user

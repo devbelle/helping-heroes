@@ -8,21 +8,21 @@
         </div>
         <div>
             <label for="post-text">Text</label>
-            <textarea id="post-text" name="post-text"></textarea>
+            <textarea id="content" name="content"></textarea>
         </div>
         <button type="submit" class="btn">Create</button>
     </form>
 </section>
 {{#if posts.length}}
 <section>
-    <h2>Your Posts</h2>
+    <h2>My Posts</h2>
     <ol>
         {{#each posts as |post|}}
         <li>
             {{> post-info post}}
-            <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit Post</a>
-            <div class="col-md-4">
-                <button class="btn btn-sm btn-danger" data-id="{{post.id}}">DELETE</button>
+            <a href="/dashboard/edit-post/{{post.id}}" class="edit-link">Edit Post</a>
+            <div>
+                <button class="delete-post-btn" data-id="{{post.id}}">DELETE</button>
             </div>
         </li>
         {{/each}}
@@ -30,14 +30,5 @@
 </section>
 {{/if}}
 
-{{!-- <h2>Response</h2>
-<form class="response-form">
-    <div>
-        <textarea name="response-body"></textarea>
-    </div>
-
-    <div>
-        <button type="submit">respond</button>
-    </div>
-</form>
-</section> --}}
+<script src="/public/js/create-post.js"></script>
+<script src="/public/js/delete-post.js"></script>

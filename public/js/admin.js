@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const toggleBan = async (evt) => {
     // allow an admin to toggle the ban status of a user
-    user_id = evt.target.dataset.id;
-
+    let user_id = evt.target.dataset.id;
     const response = await fetch(`/api/users/ban/${user_id}`, { method: 'PUT' });
     if (response.ok) {
       document.location.reload();
@@ -15,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const deleteUser = async (evt) => {
     // allow an admin to be deleted?
-    user_id = evt.target.dataset.id;
+    let user_id = evt.target.dataset.id;
+    if (!user_id) user_id = evt.target.parentElement.dataset.id;
 
     const OK = confirm('Are you sure you want to delete this user?');
 

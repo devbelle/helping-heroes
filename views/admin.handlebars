@@ -11,29 +11,27 @@
 </div>
 
 <div class="user-table">
-    <table class="table is-hoverable is-striped box">
+    <table class="table is-hoverable box">
         <thead>
             <tr>
                 <th>Username</th>
-                <th>email</th>
                 <th>Banned?</th>
                 <th>Admin?</th>
                 <th>Posts</th>
                 <th>Responses</th>
-                <th>Signup Date</th>
-                <th>Delete User?</th>
+                <th>Signup</th>
+                <th></th>
             </tr>
         </thead>
         {{#each output as |user|}}
         <tr class="user-entry">
-            <td class="username">{{user.username}}</td>
-            <td class="email"><a href="mailto:{{user.email}}">{{user.email}}</a></td>
+            <td class="username" class="mb-0"><a href="mailto:{{user.email}}">{{user.username}}<ion-icon name="mail" class="ml-1"></ion-icon></a></td>
             <td class="has-text-centered"><button class="button ban" data-id={{user.id}}>{{#if user.is_banned}}yes{{else}}no{{/if}}</button></td>
             <td class="has-text-centered">{{#if user.is_admin}}yes{{else}}no{{/if}}</td>
             <td class="has-text-centered"><a href="/admin/posts/{{user.id}}">{{user.post_count}}</a></td>
             <td class="has-text-centered"><a href="/admin/responses/{{user.id}}">{{user.response_count}}</a></td>
             <td>{{format_date user.signup_date}}</td>
-            <td><button class="button delete-user" data-id={{user.id}}>Delete</button></td>
+            <td><button class="button delete-user is-white" data-id={{user.id}}><ion-icon name="trash"></ion-icon></button></td>
         </tr>
         {{/each}}
     </table>

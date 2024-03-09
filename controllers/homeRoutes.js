@@ -36,6 +36,7 @@ router.get('/', async (req, res) => {
       posts,
       tags,
       logged_in: req.session.logged_in,
+      is_admin: req.session.is_admin,
       username: req.session.username
     });
 

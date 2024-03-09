@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   var options = {
     valueNames: [ 'username', 'ban', 'posts', 'responses', 'admin' ],
     pagination: true,
-    page: 10,
+    page: 10
   };
 
   var userList = new List('users', options);

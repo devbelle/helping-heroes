@@ -1,0 +1,8 @@
+/* "pagination" items related to list.js styling of page links */
+.pagination li {
+    display: inline-block;
+    padding: 5px;
+}
+.pagination {
+    width: 100px;
+}

@@ -4,10 +4,13 @@
 <h3 class="is-size-4 title">Posts by {{username}}</h3>
 {{/if}}
 <div id="all-posts" class="m-2">
-    <!-- <input type="text" class="search input" placeholder="Search" /> -->
-    <!-- <button class="sort button" data-sort="title">Sort by title</button> -->
-    <!-- <button class="sort button" data-sort="username">Sort by username</button> -->
-    <!-- <button class="sort button" data-sort="date">Sort by date</button> -->
+    <p class="m-1">Sort by:</p>
+    <div class="columns m-1">
+        <button class="sort button is-primary m-1" data-sort="title">Title</button>
+        <button class="sort button is-primary m-1" data-sort="username">Username</button>
+        <button class="sort button is-primary m-1" data-sort="date">Date</button>
+        <input type="text" class="search input m-1" placeholder="Search" />
+    </div>
     <ul class="list">
         {{#each output as |post|}}
         <li class="box m-1">
@@ -21,4 +24,5 @@
         {{/each}}
     </ul>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 <script src="/js/adminPosts.js"> </script>

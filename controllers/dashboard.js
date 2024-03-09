@@ -92,10 +92,11 @@ router.get('/', withAuth, async (req, res) => {
   });
   const users = userData.get({ plain: true});
 
-  res.render('homepage', {
+  res.render('dashboard', {
     ...users,
-    loggedIn: req.session.loggedIn,
-    username: req.session.username
+    logged_in: req.session.logged_in,
+    is_admin: req.session.is_Admin,
+    user_id: req.session.user_id
   });
   } catch (err) {
       res.status(500).json(err);
@@ -250,19 +251,19 @@ router.post('/logout', (req, res) => {
 //     }
 // });
 
-router.post('/:id', async (req, res) => {
-    try {
-      const newUpvote = await UserUpvote.create(
-        {
-          user_id: req.session.user_id,
-          response_id: req.params.id
-        }
-      );
-      res.status(200).json(newUpvote);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  });
+// router.post('/:id', async (req, res) => {
+//     try {
+//       const newUpvote = await UserUpvote.create(
+//         {
+//           user_id: req.session.user_id,
+//           response_id: req.params.id
+//         }
+//       );
+//       res.status(200).json(newUpvote);
+//     } catch (err) {
+//       res.status(500).json(err);
+//     }
+//   });
   
   // Route counts the number of upvotes for a given response
   // The response-id is passed in the route

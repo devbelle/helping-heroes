@@ -1,23 +1,24 @@
 <div class="columns">
 <div class="column is-two-fifths">
+<h1>Filter by Tag Name</h1>
 {{#each tags}}
 <a id="tag-filter">#{{name}}</a>
 {{/each}}
 </div>
 <div class="column is-three fifths">
-<h1>Recent Posts:</h1>
+<h1>Posts</h1>
+<div id="postList">
 {{#each posts as |post|}}
 <div>
 <ul>
 <li>
-<h2>{{post.title}}</h2>
-<p>{{post.content}}</p>
+<a href="/posts/{{post.id}}"><h2>{{post.title}}</h2></a>
 <p>Posted by {{post.user.username}}</p>
-<p>Tags: #{{post.tag.name}}</p>
+<p>Created on {{format_date post.date}}</p>
 {{/each}}
 </li>
 </ul>
-<li>
-</li>
 </div>
 </div>
+</div>
+<script src="/js/homepage.js"></script>

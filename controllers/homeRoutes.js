@@ -1,14 +1,11 @@
 const router = require('express').Router();
-const sequelize = require('../config/connection');
-const session = require('express-session');
-const { withAuth } = require('../utils/auth');
-const { Post, Response, Tag, TagPost, User, UserUpvote} = require('../models');
+const { Post, Tag, User } = require('../models');
 
 
 router.get('/', async (req, res) => {
   try {
     const postData = await Post.findAll({
-      attributes: ['title', 'content'],
+      attributes: ['title', 'content', 'id', ['created_at', 'date']],
       include: [ {
         model: User,
         attributes: ['username']

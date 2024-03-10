@@ -1,3 +1,4 @@
+<div>
 {{#if logged_in}}
 <section>
     <h2>Create New Post</h2>
@@ -13,14 +14,15 @@
         <button type="submit" class="btn">Create</button>
     </form>
 </section>
+{{/if}}
 {{#if posts.length}}
 <section>
     <h2>My Posts</h2>
     <ol>
         {{#each posts as |post|}}
         <li>
-            {{> post-info post}}
-            <a href="/dashboard/single-post/{{post.id}}">{{post.title}}</a>
+            {{!-- {{> post-info post}} --}}
+            <a href="/posts/{{post.id}}">{{post.title}}</a>
             <a href="/dashboard/edit-post/{{post.id}}" class="edit-link">Edit Post</a>
             <div>
                 <button class="delete-post-btn" data-id="{{post.id}}">DELETE POST</button>
@@ -34,6 +36,6 @@
     </ol>
 </section>
 {{/if}}
-
-<script src="/public/js/create-post.js"></script>
-<script src="/public/js/delete-post.js"></script>
+</div>
+<script src="/js/delete-post.js"></script>
+<script src="/js/create-post.js"></script>

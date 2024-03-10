@@ -9,31 +9,39 @@ const { countUpvotes } = require('../utils/count');
 //dashboard
 router.get('/', withAuth, async (req, res) => {
   try {
-  const userData = await User.findByPk(req.session.user_id, {
+  const postData = await Post.findAll({
     attributes: [
-      'username',
-      'email'
-    ],
+      'id',
+      'title',
+      'content'
+    ], 
+
+    where: {user_id: req.session.user_id},
     
     include: [
       {
         model: Response,
-        attributes: ['content' ],
-          
-      },
-      
-      {
-        model: Post,
-        attributes: ['title', 'content'],
-       
+        attributes: ['content'],
       },
       
     ],
   });
-  const users = userData.get({ plain: true});
+  const posts = postData.map(val => val.get({ plain: true}));
+  console.log({posts})
+  const responses = await Response.findAll({
+    where: {user_id: req.session.user_id}
+  });
+
+  const userUpvotes = responses.map(val => val.get({ plain: true }));
+
+  for (let i = 0; i < userUpvotes.length; i++) {
+    userUpvotes[i].upvotes = await countUpvotes(userUpvotes[i].id);
+  }
 
   res.render('dashboard', {
-    ...users,
+    posts,
+    responses,
+    userUpvotes,
     logged_in: req.session.logged_in,
     is_admin: req.session.is_admin,
     username: req.session.username
@@ -43,50 +51,76 @@ router.get('/', withAuth, async (req, res) => {
   }
 });
 
-// router.get('/:id', withAuth, async (req, res) => {
-//   try {
-//     const numberUpvotes = await UserUpvote.findAll({
-//       where: {response_id: req.params.id}
-//     })
-//     // res.status(200).json(countUpvotes);
+//edit post
+router.get('/edit-post/:id', withAuth, async (req, res) => {
+  try{
+  const singlePost = await Post.findByPk(req.params.id, {
+    atttributes: [
+      'id',
+      'title',
+      'content'
+    ],
+    where: {user_id: req.session.user_id},
 
-//     const numberOfUpvotes = numberUpvotes.map(val => val.get({ plain: true }));
+    include: [
+      {
+        model: Response,
+        attributes: ['content'],
+      },
+      
+    ],
+  });
+  const post = singlePost.map(val => val.get({ plain: true}));
+  
 
-//     for (let i = 0; i < numberOfUpvotes.length; i++) {
-//       numberOfUpvotes[i].upvotes = await countUpvotes(numberOfUpvotes[i].id);
-//     }
-//     res.render('dashboard',
-//     {
-//       logged_in: req.session.logged_in,
-//       is_admin: req.session.is_admin,
-//       numberOfUpvotes
-//     });
+  res.render('edit-post', {
+    post,
+    logged_in: req.session.logged_in,
+    is_admin: req.session.is_admin,
+    username: req.session.username
+  })
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// //single-post
+// router.get('/single-post/:id', withAuth, async (req, res) => {
+//   try{
+//   const singlePost = await Post.findByPk(req.params.id, {
+//     atttributes: [
+//       'id',
+//       'title',
+//       'content'
+//     ],
+//     where: {user_id: req.session.user_id},
+
+//     include: [
+//       {
+//         model: Response,
+//         attributes: ['content'],
+//       },
+      
+//     ],
+//   });
+//   const post = singlePost.map(val => val.get({ plain: true}));
+//   const responses = await Response.findAll({
+//     where: {user_id: req.session.user_id}
+//   });
+  
+//   res.render('single-post', {
+//     post,
+//     responses,
+//     logged_in: req.session.logged_in,
+//     is_admin: req.session.is_admin,
+//     username: req.session.username
+//   })
 //   } catch (err) {
 //     res.status(500).json(err);
 //   }
 // });
 
-//logout 
-router.post('/logout', (req, res) => {
-    if (req.session.logged_in) {
-      req.session.destroy(() => {
-        res.status(204).end();
-      });
-    } else {
-      res.status(404).end();
-    }
-  });
 
- 
-  // router.get('/:id', async (req, res) => {
-  //   try {
-  //     const countUpvotes = await UserUpvote.count({
-  //       where: {response_id: req.params.id}
-  //     })
-  //     res.status(200).json(countUpvotes);
-  //   } catch (err) {
-  //     res.status(500).json(err);
-  //   }
-  // });
+
   
-  // module.exports = router;
+ module.exports = router;

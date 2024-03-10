@@ -1,0 +1,25 @@
+<!-- Display a single post and its comments -->
+<!-- Users can also add a comment -->
+
+<div class="one-post box">
+    <h3 class="post-title title">{{title}}</h3>
+    <p class="mb-2">{{content}}</p>
+    <p>Posted by {{post_username}} on {{format_date date}}</p>
+    <p>Number of responses: {{numResponses}}</p>
+    <p>Tags: {{tags}}</p>
+</div>
+
+<div class="responses">
+    <h4 class="is-size-5">Responses</h4>
+    <ul>
+        {{#each responses as |response|}}
+        <li class="box mb-1">
+        <p>{{response.content}}</p>
+        <p>&mdash; {{response.username}} on {{format_date response.date}} </p>
+        <p>{{upvotes}} upvotes</p>
+        <button class="upvote button"><ion-icon name="thumbs-up-outline"></ion-icon></button>
+        </li>
+        {{/each}}
+    </ul>
+</div>
+<button class="add-response button">Add a response</button>

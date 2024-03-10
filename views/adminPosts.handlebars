@@ -14,7 +14,7 @@
     <ul class="list">
         {{#each output as |post|}}
         <li class="box m-1">
-            <p class="title mb-2 is-size-5">{{post.title}}</p>
+            <a href="/posts/{{post.id}}" class="mb-2 is-size-4">{{post.title}}</a>
             <p class="username">By {{post.user.username}}</p>
             <p class="mb-1">{{post.content}}</p>
             <p class="date mb-1">Posted on {{format_date post.date}}</p>

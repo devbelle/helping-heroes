@@ -21,7 +21,7 @@ router.post('/:id', withAuth, async (req, res) => {
     );
     res.status(200).json(newUpvote);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json(err.message);
   }
 });
 

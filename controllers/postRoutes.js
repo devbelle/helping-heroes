@@ -13,7 +13,7 @@ router.get('/:id', withAuth, async (req, res) => {
   // user should have the ability to respond to this post
 
   const onePost = await Post.findByPk(req.params.id, {
-    attributes: ['title', 'content', ['updated_at', 'date']],
+    attributes: ['id', 'title', 'content', ['updated_at', 'date']],
     include: [{
       model: User,
       attributes: ['username']
@@ -35,15 +35,18 @@ router.get('/:id', withAuth, async (req, res) => {
   postData.post_username = postData.user.username;
   delete postData.user;
 
-  // add the comments count to the post
+  // add the responses count to the post
   postData.numResponses = postData.responses.length;
 
   // for each response in the object, add the number of upvotes for that response
   // and flatten the response object for convenience
+  // and set a boolean based on whether the logged-in user has upvoted a given response
   for (const response of postData.responses) {
     response.username = response.user.username;
     delete response.user;
     response.upvotes = await countUpvotes(response.id);
+    const upvotedUsers = await UserUpvote.findAll({where: { response_id: response.id }});
+    response.user_upvoted = upvotedUsers.map(item => item.user_id).includes(req.session.user_id);
   };
 
   // let's combine the tags into a single string

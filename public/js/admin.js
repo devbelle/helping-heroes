@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const deleteUser = async (evt) => {
-    // allow an admin to be deleted?
     let user_id = evt.target.dataset.id;
+    // need to account for possibly clicking inner icon
     if (!user_id) user_id = evt.target.parentElement.dataset.id;
 
     const OK = confirm('Are you sure you want to delete this user?');

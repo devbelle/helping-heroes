@@ -13,4 +13,7 @@ router.use('/admin', adminRoutes);
 const homeRoutes = require('./homeRoutes');
 router.use('/', homeRoutes);
 
+const postRoutes = require('./postRoutes.js');
+router.use('/posts', postRoutes);
+
 module.exports = router;

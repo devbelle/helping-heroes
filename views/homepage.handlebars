@@ -15,10 +15,19 @@
 <a href="/posts/{{post.id}}"><h2>{{post.title}}</h2></a>
 <p>Posted by {{post.user.username}}</p>
 <p>Created on {{format_date post.date}}</p>
-{{/each}}
+<p>Tags:
+    {{#each postTags}}
+    {{#if (eq this.id post.id)}}
+    {{#each tag as |tag|}}
+    #{{tag}}
+    {{/each}}
+    {{/if}}
+    {{/each}}
+</p>
 </li>
 </ul>
 </div>
+{{/each}}
 </div>
 </div>
 <script src="/js/homepage.js"></script>

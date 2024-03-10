@@ -9,17 +9,26 @@
     <p>Tags: {{tags}}</p>
 </div>
 
-<div class="responses">
+<div id="post-responses" class="responses">
     <h4 class="is-size-5">Responses</h4>
-    <ul>
+    <p class="m-1"> Sort by: </p>
+    <div class="columns m-1" style="width: 400px">
+        <button class="sort button m-1 is-primary" data-sort="date">Date</button>
+        <button class="sort button m-1 is-primary" data-sort="upvotes">Upvotes</button>
+        <input class="search input m-1 is-primary" type="text" placeholder="Search" />
+    </div>
+    <ul class="list">
         {{#each responses as |response|}}
         <li class="box mb-1">
-        <p>{{response.content}}</p>
-        <p>&mdash; {{response.username}} on {{format_date response.date}} </p>
-        <p>{{upvotes}} upvotes</p>
+        <p class='content'>{{response.content}}</p>
+        <p>&mdash; <span class="username">{{response.username}}</span> on <span class="date">{{format_date response.date}}</span> </p>
+        <p><span class="upvotes">{{upvotes}}</span> upvotes</p>
         <button class="upvote button"><ion-icon name="thumbs-up-outline"></ion-icon></button>
         </li>
         {{/each}}
     </ul>
 </div>
 <button class="add-response button">Add a response</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script src="/js/post.js"></script>

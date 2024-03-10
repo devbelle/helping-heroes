@@ -32,5 +32,12 @@
 </div>
 <button class="add-response button">Add a response</button>
 
+<!-- Section below is for adding a response; it is hidden during initial load -->
+<div class="add-response-content">
+    <textarea id="response-content" class="textarea m-1" cols="30" id="" name="" rows="10"></textarea>
+    <button id="submit-response" class="button is-primary m-2" data-id="{{id}}">Submit Response</button>
+    <button id="cancel-response" class="button is-primary m-2">Cancel</button>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 <script src="/js/post.js"></script>

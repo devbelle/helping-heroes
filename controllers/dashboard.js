@@ -9,38 +9,60 @@ const { countUpvotes } = require('../utils/count');
 //dashboard
 router.get('/', withAuth, async (req, res) => {
   try {
-  const userData = await User.findByPk(req.session.user_id, {
+  const postData = await Post.findAll({
     attributes: [
-      'username',
-      'email'
-    ],
+      'id',
+      'title',
+      'content'
+    ], 
+
+    where: {user_id: req.session.user_id},
     
     include: [
       {
         model: Response,
-        attributes: ['content' ],
-          
-      },
-      
-      {
-        model: Post,
-        attributes: ['title', 'content'],
-       
+        attributes: ['content'],
       },
       
     ],
   });
-  const users = userData.get({ plain: true});
+  const posts = postData.map(val => val.get({ plain: true}));
+
+  const responses = await Response.findAll({
+    where: {user_id: req.session.user_id}
+  });
+
+  const userUpvotes = responses.map(val => val.get({ plain: true }));
+
+  for (let i = 0; i < userUpvotes.length; i++) {
+    userUpvotes[i].upvotes = await countUpvotes(userUpvotes[i].id);
+  }
 
   res.render('dashboard', {
-    ...users,
+    ...posts,
+    ...responses,
+    ...userUpvotes,
     loggedIn: req.session.loggedIn,
+    is_admin: req.session.is_admin,
     username: req.session.username
   });
   } catch (err) {
       res.status(500).json(err);
   }
 });
+
+
+//login
+router.get('/login', (req, res) => {
+  // If the user is already logged in, redirect the request to another route
+  if (req.session.logged_in) {
+    res.redirect('/dashboard');
+    return;
+  }
+
+  res.render('login');
+});
+
 
 // router.get('/:id', withAuth, async (req, res) => {
 //   try {
@@ -149,34 +171,34 @@ router.post('/logout', (req, res) => {
 //     }
 // });
 
-router.post('/:id', async (req, res) => {
-    try {
-      const newUpvote = await UserUpvote.create(
-        {
-          user_id: req.session.user_id,
-          response_id: req.params.id
-        }
-      );
-      res.status(200).json(newUpvote);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  });
+// router.post('/:id', async (req, res) => {
+//     try {
+//       const newUpvote = await UserUpvote.create(
+//         {
+//           user_id: req.session.user_id,
+//           response_id: req.params.id
+//         }
+//       );
+//       res.status(200).json(newUpvote);
+//     } catch (err) {
+//       res.status(500).json(err);
+//     }
+//   });
   
   // Route counts the number of upvotes for a given response
   // The response-id is passed in the route
   // The return value is the number of upvotes for that response
   // Note that this should maybe be rewritten as a homeRoute since
   // the result will immediately be rendered somewhere
-  router.get('/:id', async (req, res) => {
-    try {
-      const countUpvotes = await UserUpvote.count({
-        where: {response_id: req.params.id}
-      })
-      res.status(200).json(countUpvotes);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  });
+  // router.get('/:id', async (req, res) => {
+  //   try {
+  //     const countUpvotes = await UserUpvote.count({
+  //       where: {response_id: req.params.id}
+  //     })
+  //     res.status(200).json(countUpvotes);
+  //   } catch (err) {
+  //     res.status(500).json(err);
+  //   }
+  // });
   
-  module.exports = router;
+  // module.exports = router;

@@ -15,15 +15,7 @@
 <a href="/posts/{{post.id}}"><h2>{{post.title}}</h2></a>
 <p>Posted by {{post.user.username}}</p>
 <p>Created on {{format_date post.date}}</p>
-<p>Tags:
-    {{#each postTags}}
-    {{#if (eq this.id post.id)}}
-    {{#each tag as |tag|}}
-    #{{tag}}
-    {{/each}}
-    {{/if}}
-    {{/each}}
-</p>
+<p>Tags: {{tags}} </p>
 </li>
 </ul>
 </div>

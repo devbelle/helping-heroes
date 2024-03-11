@@ -1,6 +1,5 @@
 <div>
-{{#if logged_in}}
-<h1>Hello {{user.username}}</h1>
+<h1>Hello, {{username}}</h1>
 <section>
     <h2>Create New Post</h2>
     <div class="create-post-form">
@@ -15,7 +14,6 @@
         <button class="post-btn">Create</button>
     </div>
 </section>
-{{/if}}
 {{#if posts.length}}
 <section>
     <h2>My Posts</h2>

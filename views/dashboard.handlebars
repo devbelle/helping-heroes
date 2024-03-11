@@ -1,8 +1,9 @@
 <div>
 {{#if logged_in}}
+<h1>Hello {{user.username}}</h1>
 <section>
     <h2>Create New Post</h2>
-    <form class="new-post-form">
+    <div class="create-post-form">
         <div>
             <label for="post-title">Title</label>
             <input type="text" id="post-title" name="post-title"/>
@@ -11,8 +12,8 @@
             <label for="post-text">Text</label>
             <textarea id="content" name="content"></textarea>
         </div>
-        <button type="submit" class="btn">Create</button>
-    </form>
+        <button class="post-btn">Create</button>
+    </div>
 </section>
 {{/if}}
 {{#if posts.length}}
@@ -23,19 +24,29 @@
         <li>
             {{!-- {{> post-info post}} --}}
             <a href="/posts/{{post.id}}">{{post.title}}</a>
-            <a href="/dashboard/edit-post/{{post.id}}" class="edit-link">Edit Post</a>
+            <a href="/dashboard/edit-post/{{post.id}}" class="edit-link"><button>Edit Post</button></a>
             <div>
                 <button class="delete-post-btn" data-id="{{post.id}}">DELETE POST</button>
-            </div>
-            <div>
-                <p class="mb-1">{{responses.content}}</p>
-                <p class="mb-1">{{res.upvotes}} upvotes</p>
             </div>
         </li>
         {{/each}}
     </ol>
 </section>
+<br>
+<section>
+    <h2>My Responses</h2>
+    <ol>
+        {{#each responses as |response|}}
+        <li>
+            <p class="response">{{response.content}}</p>
+            <p>Responding to post {{response.post.title}}</p>
+            <a href="/dashboard/response-edit/{{response.id}}" class="edit-link"><button>Edit Response</button></a>
+            <div>
+                <button class="delete-post-btn" data-id="{{response.id}}">DELETE RESPONSE</button>
+            </div>
+        </li>
+        {{/each}}
+</section>
 {{/if}}
 </div>
-<script src="/js/delete-post.js"></script>
 <script src="/js/create-post.js"></script>

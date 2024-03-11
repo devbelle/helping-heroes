@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitResponseBtnEl = document.getElementById('submit-response');
   const cancelResponseBtnEl = document.getElementById('cancel-response');
   const addResponseBtnEl = document.querySelector('button.add-response');
+  const dropdown2 = document.getElementById('dropdown2');
 
   // set up ability to sort and search (list.js)
   var postList = new List('post-responses',
@@ -79,6 +80,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  function isActive2() {
+    if (dropdown2.classList.contains('is-active')) {
+      dropdown2.classList.remove('is-active');
+    } else {
+      dropdown2.classList.add('is-active');
+    }
+  }
+
   /////////////////////////////////////////////////////////////////////////////
   //                             Event Listeners                             //
   /////////////////////////////////////////////////////////////////////////////
@@ -96,6 +105,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // creating a new response in the DB
   submitResponseBtnEl.addEventListener('click', createResponse);
+
+  // allowing opening and collapsing of sortby dropdown
+  dropdown2.addEventListener('click', isActive2);
 
   /////////////////////////////////////////////////////////////////////////////
   //                          Executible Statements                          //

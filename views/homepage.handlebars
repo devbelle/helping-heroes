@@ -1,25 +1,61 @@
-<div class="columns">
-<div class="column is-two-fifths">
-<h1>Filter by Tag Name</h1>
-{{#each tags}}
-<a id="tag-filter">#{{name}}</a>
-{{/each}}
+
+{{#if logged_in}}
+<div class="card">
+<div class="card-content">
+<div class="content">
+<h1 class="has-text-danger-dark has-text-centered">Hello {{usernamelog}}!</h1>
+<a href="/dashboard"><button class="button is-info is-rounded" id="make"><strong>What do you want to share today?</strong></button></a>
 </div>
-<div class="column is-three fifths">
-<h1>Posts</h1>
+</div>
+</div>
+{{else}}
+<div id="welcome-message">
+<div class="card">
+<div class="card-content">
+<div class="content">
+<h1 class="has-text-danger-dark has-text-centered">Welcome to Helping Heroes!</h1>
+</div>
+</div>
+</div> 
+</div>
+{{/if}}
+
+
+<h1 class="title has-text-centered mt-3"><strong class="has-text-white">Posts</strong></h1>
+
+
+<div class="dropdown my-2" id="dropdown2">
+  <div class="dropdown-trigger">
+    <button class="button is-white has-text-info" aria-haspopup="true" aria-controls="dropdown-menu">
+      <strong><span>Filter Tags</span></strong>
+      <span class="icon is-small">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
+  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+    <div class="dropdown-content">
+    {{#each tags}}
+    <a href="" id="tag-filter" class="dropdown-item">#{{name}}</a>
+    {{/each}}
+  </div>
+</div>
+</div>
+
+
 <div id="postList">
 {{#each posts as |post|}}
-<div>
-<ul>
-<li>
-<a href="/posts/{{post.id}}"><h2>{{post.title}}</h2></a>
-<p>Posted by {{post.user.username}}</p>
-<p>Created on {{format_date post.date}}</p>
+<div class="card my-5">
+<div class="card-content">
+<div class="content">
+<h2 class="has-text-danger-dark">{{post.title}}</h2>
+<p>Posted By: {{post.user.username}}</p>
+<p>Created On: {{format_date post.date}}</p>
 <p>Tags: {{tags}} </p>
-</li>
-</ul>
+<a href="/posts/{{post.id}}"><button class="button is-info has-text-white"><strong>View Post</strong></button></a>
+</div>
+</div>
 </div>
 {{/each}}
-</div>
-</div>
+
 <script src="/js/homepage.js"></script>

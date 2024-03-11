@@ -1,28 +1,53 @@
 {{#if all}}
-<h3 class="is-size-4 title">All Posts</h3>
+<h1 class="title has-text-centered has-text-white">All Posts</h1>
 {{else}}
 <h3 class="is-size-4 title">Posts by {{username}}</h3>
 {{/if}}
 <div id="all-posts" class="m-2">
-    <p class="m-1">Sort by:</p>
-    <div class="columns m-1">
-        <button class="sort button is-primary m-1" data-sort="title">Title</button>
-        <button class="sort button is-primary m-1" data-sort="username">Username</button>
-        <button class="sort button is-primary m-1" data-sort="date">Date</button>
-        <input type="text" class="search input m-1" placeholder="Search" />
+   
+    <div class="columns m-1" style="width: 400px;">
+    <div class="dropdown my-2" id="dropdown2">
+     <div class="dropdown-trigger">
+        <button class="button is-white has-text-info" aria-haspopup="true" aria-controls="dropdown-menu">
+      <strong><span>Sort By</span></strong>
+      <span class="icon is-small">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+     </div>   
+     <div class="dropdown-menu" id="dropdown-menu" role="menu">
+<div class="dropdown-content">
+<a class="dropdown-item sort is-primary m-1" data-sort="title">Title</a>
+<a class="dropdown-item sort is-primary m-1" data-sort="username">Username</a>
+<a class="dropdown-item sort is-primary m-1" data-sort="date">Date</a>
+</div>
     </div>
-    <ul class="list">
-        {{#each output as |post|}}
-        <li class="box m-1">
-            <a href="/posts/{{post.id}}" class="mb-2 is-size-4">{{post.title}}</a>
+    </div>
+    <div class="field">
+        <div class="control">
+        <input type="text" class="search input m-1" placeholder="Search" />
+        </div>
+    </div>
+    </div>
+
+
+    <div class="list">
+     {{#each output as |post|}}
+     <div class="card">
+    <div class="card-content">
+    <div class="content">
+    <h2 class="has-text-danger-dark">{{post.title}}</h2>
             <p class="username">By {{post.user.username}}</p>
             <p class="mb-1">{{post.content}}</p>
             <p class="date mb-1">Posted on {{format_date post.date}}</p>
             <p class="mb-1">{{post.comments}} comments</p>
-            <button class="button delete-post" data-id="{{post.id}}">Delete</button>
-        </li>
-        {{/each}}
-    </ul>
+            <button class="button delete-post is-info has-text-white" data-id="{{post.id}}">Delete</button>
+    </div>
+    </div>
+     </div>
+{{/each}}
+    </div>
+
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 <script src="/js/adminPosts.js"> </script>

@@ -1,3 +1,10 @@
+body {
+width: 100wh;
+height: 100vh;
+}
+
+
+
 /* "pagination" items related to list.js styling of page links */
 .pagination li {
     display: inline-block;

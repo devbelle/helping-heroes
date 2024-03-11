@@ -1,24 +1,24 @@
 <!-- Display list of users, their email, # comments, # posts -->
 <!-- From here the admin can launch the user profile, view/delete comments, view/delete posts -->
 
-<h2 class="title m-2">Admin Page</h2>
+<h2 class="title m-2 has-text-white has-text-centered">Admin Page</h2>
 
 <div class="content">
-    <ul>
-        <li>Click on the "banned" button to toggle ban</li>
-        <li>Click on numbers to see users posts/responses</li>
-    </ul>
+    <h2 class="is-size-4 has-text-white">Instructions:</h2>
+    <p><strong class="has-text-white">Click on the "banned" button to toggle ban.</strong></p>
+    <p><strong class="has-text-white">Click on numbers to see users posts/responses.</strong></p>
 </div>
 
 <div id="users" class="user-table">
     <div class="columns" style="width: 750px">
-        <button class="sort button is-one-fifth ml-1" data-sort="username">Sort by username</button>
+        <button class="sort button is-white has-text-info ml-1" data-sort="username">Sort By username</button>
         <input class="search input is-two-fifths ml-1 mr-1" placeholder="Search"/>
     </div>
     <table class="user-table table is-hoverable box">
         <thead>
             <tr>
                 <th>Username</th>
+                <th>Email</th>
                 <th>Banned?</th>
                 <th>Admin?</th>
                 <th>Posts</th>
@@ -30,21 +30,22 @@
         <tbody class="list">
             {{#each output as |user|}}
             <tr class="user-entry">
-                <td class="username" class="mb-0"><a href="mailto:{{user.email}}">{{user.username}}<ion-icon name="mail" class="ml-1"></ion-icon></a></td>
-                <td class="ban has-text-centered"><button class="button ban" data-id={{user.id}}>{{#if user.is_banned}}yes{{else}}no{{/if}}</button></td>
-                <td class="admin has-text-centered">{{#if user.is_admin}}yes{{else}}no{{/if}}</td>
-                <td class="posts has-text-centered"><a href="/admin/posts/{{user.id}}">{{user.post_count}}</a></td>
-                <td class="responses has-text-centered"><a href="/admin/responses/{{user.id}}">{{user.response_count}}</a></td>
+                <td class="username mx-2">{{user.username}}</a></td>
+                <td class="email mx-2"><a href="mailto:{{user.email}}">{{user.email}}</a></td>
+                <td class="ban has-text-centered mx-2"><button class="button ban" data-id={{user.id}}>{{#if user.is_banned}}yes{{else}}no{{/if}}</button></td>
+                <td class="admin has-text-centered mx-2">{{#if user.is_admin}}yes{{else}}no{{/if}}</td>
+                <td class="posts has-text-centered mx-2"><a href="/admin/posts/{{user.id}}">{{user.post_count}}</a></td>
+                <td class="responses has-text-centered mx-2"><a href="/admin/responses/{{user.id}}">{{user.response_count}}</a></td>
                 <td>{{format_date user.signup_date}}</td>
-                <td><button class="button delete-user is-white" data-id={{user.id}}><ion-icon name="trash"></ion-icon></button></td>
+                <td><button class="button delete-user is-white mx-2" data-id={{user.id}}><ion-icon name="trash"></ion-icon></button></td>
             </tr>
             {{/each}}
         </tbody>
         <tbody class="pagination"></tbody>
     </table>
     <div>
-        <a href="/admin/posts"><button class="button">All Posts</button></a>
-        <a href="/admin/responses"><button class="button">All Responses</button></a>
+        <a href="/admin/posts"><button class="button is-white has-text-info">All Posts</button></a>
+        <a href="/admin/responses"><button class="button is-white has-text-info">All Responses</button></a>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>

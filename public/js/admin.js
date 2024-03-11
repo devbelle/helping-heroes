@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   // functionality to ban or delete a user
   var options = {
-    valueNames: [ 'username', 'ban', 'posts', 'responses', 'admin' ],
+    valueNames: ['username', 'ban', 'posts', 'responses', 'admin'],
     pagination: true,
     page: 10
   };
@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let user_id = evt.target.dataset.id;
     const response = await fetch(`/api/users/ban/${user_id}`, { method: 'PUT' });
     if (response.ok) {
-      document.location.reload();
+      evt.target.innerHTML === 'yes' ?
+        evt.target.innerHTML = 'no' :
+        evt.target.innerHTML = 'yes';
     } else {
       alert(`Failed to toggle banned status; ${response.statusText}`);
     }

@@ -13,8 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const dropdown2 = document.getElementById('dropdown2');
 
   // set up ability to sort and search (list.js)
-  var postList = new List('post-responses',
-    { valueNames: ['date', 'num_upvotes', 'content', 'username'] });
+  const listItemsEl = document.querySelectorAll('ul.list li');
+  if (listItemsEl.length) {
+    var postList = new List('post-responses',
+      { valueNames: ['date', 'num_upvotes', 'content', 'username'] });
+  }
+
 
   /////////////////////////////////////////////////////////////////////////////
   //                           Function Definitions                          //

@@ -1,7 +1,7 @@
 // allows admins to delete posts in response to clicking the delete button
 // linked to "adminPosts.handlebars"
 
-var postList = new List('all-posts', { valueNames: [ 'title', 'username', 'date' ] });
+var postList = new List('all-posts', { valueNames: [ 'post-title', 'username', 'date' ] });
 
 const deletePost = async (evt) => {
   const OK = confirm('Are you sure you want to delete this post?');

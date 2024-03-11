@@ -9,7 +9,8 @@ const { countUpvotes, countResponses, countUserResponses, countUserPosts } = req
 router.get('/', isAdmin, async (req, res) => {
   // send a list of users, their email, signup date, num comments, num posts, isAdmin, isBanned
   const allUsers = await User.findAll({
-    attributes: ['id', 'username', 'email', 'is_banned', 'is_admin', ['created_at', 'signup_date']]
+    attributes: ['id', 'username', 'email', 'is_banned', 'is_admin', ['created_at', 'signup_date']],
+    order: [['username', 'ASC']]
   });
 
   if (allUsers.length === 0) {

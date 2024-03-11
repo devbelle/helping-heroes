@@ -8,16 +8,14 @@ router.get('/', async (req, res) => {
     // Fetch all posts including associated tags
     const allPosts = await Post.findAll({
       attributes: ['id', 'title', 'content', ['updated_at', 'date']],
-      include: [
-        {
-          model: User,
-          attributes: ['username']
-        },
-        {
-          model: Tag,
-          attributes: ['name']
-        }
-      ]
+      order: [['date', 'DESC']],
+      include: [{
+        model: User,
+        attributes: ['username']
+      }, {
+        model: Tag,
+        attributes: ['name']
+      }]
     });
 
     // Process each post to include tags
@@ -39,7 +37,7 @@ router.get('/', async (req, res) => {
     const tagData = await Tag.findAll({ attributes: ['name'] });
     const tags = tagData.map(tag => tag.get({ plain: true }));
 
-        // Fetch the username of the logged-in user
+    // Fetch the username of the logged-in user
     let usernamelog = '';
     if (req.session.logged_in) {
       const user = await User.findByPk(req.session.user_id);

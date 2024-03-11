@@ -65,24 +65,27 @@ router.get('/', withAuth, async (req, res) => {
 //edit post
 router.get('/response-edit/:id', withAuth, async (req, res) => {
   try{
-  const singlePost = await Post.findOne(req.params.id, {
+  const singleResponse = await Response.findByPk(req.params.id, {
     atttributes: [
-      'title',
-      'content'
+      'id',
+      'content',
+      'post_id',
+      'user_id'
+    
     ],
     include: [
       {
-        model: Response,
-        attributes: ['content'],
+        model: Post,
+        attributes: ['title', 'content']
       },
       
     ],
   });
-  const post = singlePost.get({ plain: true});
-  
+  const response = singleResponse.get({ plain: true});
+  console.log(response)
 
   res.render('response-edit', {
-    post,
+    response,
     logged_in: req.session.logged_in,
     is_admin: req.session.is_admin,
     username: req.session.username

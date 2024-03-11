@@ -6,7 +6,8 @@ const { Post, Response, Tag, TagPost, User, UserUpvote} = require('../models');
 const { countUpvotes } = require('../utils/count');
 
 
-//dashboard
+
+// //dashboard
 router.get('/', withAuth, async (req, res) => {
   try {
   const postData = await Post.findAll({
@@ -18,30 +19,40 @@ router.get('/', withAuth, async (req, res) => {
 
     where: {user_id: req.session.user_id},
     
-    include: [
-      {
-        model: Response,
-        attributes: ['content'],
-      },
+    // include: [
+    //   {
+    //     model: Response,
+    //     attributes: ['content'],
+    //   },
       
-    ],
+    // ],
   });
   const posts = postData.map(val => val.get({ plain: true}));
   console.log({posts})
-  const responses = await Response.findAll({
-    where: {user_id: req.session.user_id}
+
+  const responseData = await Response.findAll({
+    where: {user_id: req.session.user_id},
+    include: [
+      {
+      model: Post,
+      attributes: ['id', 'title']
+      }
+    ]
   });
 
-  const userUpvotes = responses.map(val => val.get({ plain: true }));
+  const responses = responseData.map(val => val.get({plain: true}));
 
-  for (let i = 0; i < userUpvotes.length; i++) {
-    userUpvotes[i].upvotes = await countUpvotes(userUpvotes[i].id);
-  }
+  // const userUpvotes = responses.map(val => val.get({ plain: true }));
+
+  // for (let i = 0; i < userUpvotes.length; i++) {
+  //   userUpvotes[i].upvotes = await countUpvotes(userUpvotes[i].id);
+  // }
+
+  
 
   res.render('dashboard', {
     posts,
     responses,
-    userUpvotes,
     logged_in: req.session.logged_in,
     is_admin: req.session.is_admin,
     username: req.session.username
@@ -52,16 +63,13 @@ router.get('/', withAuth, async (req, res) => {
 });
 
 //edit post
-router.get('/edit-post/:id', withAuth, async (req, res) => {
+router.get('/response-edit/:id', withAuth, async (req, res) => {
   try{
-  const singlePost = await Post.findByPk(req.params.id, {
+  const singlePost = await Post.findOne(req.params.id, {
     atttributes: [
-      'id',
       'title',
       'content'
     ],
-    where: {user_id: req.session.user_id},
-
     include: [
       {
         model: Response,
@@ -70,10 +78,10 @@ router.get('/edit-post/:id', withAuth, async (req, res) => {
       
     ],
   });
-  const post = singlePost.map(val => val.get({ plain: true}));
+  const post = singlePost.get({ plain: true});
   
 
-  res.render('edit-post', {
+  res.render('response-edit', {
     post,
     logged_in: req.session.logged_in,
     is_admin: req.session.is_admin,
@@ -83,6 +91,10 @@ router.get('/edit-post/:id', withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
+//responses
+
 
 // //single-post
 // router.get('/single-post/:id', withAuth, async (req, res) => {

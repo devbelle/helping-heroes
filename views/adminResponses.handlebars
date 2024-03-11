@@ -1,16 +1,37 @@
+
 {{#if all}}
-<h3 class="is-size-4">All responses</h3>
+<h1 class="title has-text-centered has-text-white">All responses</h1>
 {{else}}
-<h3 class="is-size-4">Responses by {{username}}</h3>
+<h1 class="title has-text-centered has-text-white">Responses by {{username}}</h1>
 {{/if}}
 <div id="all-responses" class="m-2">
-    <p class="m-1">Sort by:</p>
-    <div class="columns m-1">
-        <button class="sort button is-primary m-1" data-sort="username">Username</button>
-        <button class="sort button is-primary m-1" data-sort="date">Date</button>
-        <button class="sort button is-primary m-1" data-sort="upvotes">Upvotes</button>
-        <input type="text" class="search input m-1" placeholder="Search" />
+
+     <div class="columns m-1" style="width: 400px;">
+    <div class="dropdown my-2" id="dropdown2">
+     <div class="dropdown-trigger">
+        <button class="button is-white has-text-info" aria-haspopup="true" aria-controls="dropdown-menu">
+      <strong><span>Sort By</span></strong>
+      <span class="icon is-small">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+     </div>   
+     <div class="dropdown-menu" id="dropdown-menu" role="menu">
+<div class="dropdown-content">
+<a class="dropdown-item sort is-primary m-1" data-sort="username">Username</a>
+<a class="dropdown-item sort is-primary m-1" data-sort="date">Date</a>
+<a class="dropdown-item sort is-primary m-1" data-sort="upvotes">Upvotes</a>
+</div>
     </div>
+    </div>
+    <div class="field">
+        <div class="control">
+        <input type="text" class="search input m-1" placeholder="Search" />
+        </div>
+    </div>
+    </div>
+
+
     <ul class="list">
         {{#each output as |res|}}
         <li class="box m-1">

@@ -2,41 +2,67 @@
 <!-- Users can also add a comment -->
 
 <div class="one-post box">
-    <h3 class="post-title title">{{title}}</h3>
+    <h3 class="post-title title has-text-danger-dark">{{title}}</h3>
     <p class="mb-2">{{content}}</p>
     <p>Posted by {{post_username}} on {{format_date date}}</p>
     <p>Number of responses: {{numResponses}}</p>
     <p>Tags: {{tags}}</p>
 </div>
 
+
 <div id="post-responses" class="responses">
-    <h4 class="is-size-5">Responses</h4>
-    <p class="m-1"> Sort by: </p>
-    <div class="columns m-1" style="width: 400px">
-        <button class="sort button m-1 is-primary" data-sort="date">Date</button>
-        <button class="sort button m-1 is-primary" data-sort="num_upvotes">Upvotes</button>
-        <input class="search input m-1 is-primary" type="text" placeholder="Search" />
-    </div>
-    <ul class="list">
-        {{#each responses as |response|}}
-        <li class="box mb-1">
-            <p class='content'>{{response.content}}</p>
-            <p>&mdash; <span class="username">{{response.username}}</span> on <span class="date">{{format_date response.date}}</span> </p>
-            <div class="upvote">
-                <p><span class="num_upvotes">{{upvotes}}</span> upvotes <em class="upvote" style="display: {{#if response.user_upvoted}}inline{{else}}none{{/if}}">(you have upvoted this post)</em></p>
-                <button class="upvote button" data-id="{{response.id}}"><ion-icon name="thumbs-up-outline"></ion-icon></button>
-            </div>
-        </li>
-        {{/each}}
-    </ul>
+<h1 class="is-size-2 has-text-centered"><strong class="has-text-white">Responses</strong></h1>
+<div class="columns m-1" style="width: 400px;">
+<div class="dropdown my-2" id="dropdown2">
+  <div class="dropdown-trigger">
+    <button class="button is-white has-text-info" aria-haspopup="true" aria-controls="dropdown-menu">
+      <strong><span>Sort By</span></strong>
+      <span class="icon is-small">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
+  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+    <div class="dropdown-content">
+  <a class="dropdown-item sort" data-sort="date">Date</a>
+  <a class="dropdown-item sort" data-sort="num_upvotes">Upvotes</a>
+  </div>
 </div>
-<button class="add-response button">Add a response</button>
+</div>
+<div class="field">
+<div class="control">
+ <input class="search input m-1" type="text" placeholder="Search"/>
+</div>
+</div>
+</div>
+
+
+    <div class="list">
+    {{#each responses as |response|}}
+    <div class="card my-5">
+    <div class="card-content">
+    <div class="content">
+    <p class='content'>{{response.content}}</p>
+    <p>&mdash; <span class="username">{{response.username}}</span> on <span class="date">{{format_date response.date}}</span> </p>
+    <div class="upvote">
+    <p><span class="num_upvotes">{{upvotes}}</span> upvotes <em class="upvote" style="display: {{#if response.user_upvoted}}inline{{else}}none{{/if}}">(you have upvoted this post)</em></p>
+    <button class="upvote button" data-id="{{response.id}}"><ion-icon name="thumbs-up-outline"></ion-icon></button>
+    </div>
+    </div>
+    </div>
+    </div>
+    {{/each}}
+    </div>
+  
+    
+
+<button class="add-response button has-text-info is-white">Add a response</button>
 
 <!-- Section below is for adding a response; it is hidden during initial load -->
 <div class="add-response-content">
     <textarea id="response-content" class="textarea m-1" cols="30" id="" name="" rows="10"></textarea>
-    <button id="submit-response" class="button is-primary m-2" data-id="{{id}}">Submit Response</button>
-    <button id="cancel-response" class="button is-primary m-2">Cancel</button>
+    <button id="submit-response" class="button is-white has-text-info m-2" data-id="{{id}}">Submit Response</button>
+    <button id="cancel-response" class="button is-white has-text-info m-2">Cancel</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>

@@ -8,31 +8,45 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="/css/styles.css" type="text/css" media="screen" />
   </head>
-  <body>
-  </head>
-  <body>
+  <body class="body">
     <header>
-      <nav>
-        <a href="/"><button class="button is-link m-1">Home</button></a>
-        {{#if logged_in}}
-        <a href="/dashboard"><button class="button is-link m-1">My Dashboard</button></a>
-        <button class="button logout is-link m-1">Logout</button>
-        {{#if is_admin}}
-        <a href="/admin"><button class="button is-link m-1">Admin</button></a>
-        {{/if}}
-        {{else}}
-        <a href="/login"><button class="button is-link m-1">Login</button></a>
-        {{/if}}
+      <nav class="navbar mx-3 p-1" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a href="/"><img src="/HelpingHeroesLogo.svg" width="336" height="84"></a>
+        </div>
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+          <a class="navbar-item" href="/">Home</a>
+          {{#if logged_in}}
+          <a class="navbar-item" href="/dashboard">My Dashboard</a>
+          {{/if}}
+          {{#if is_admin}}
+          <a class="navbar-item" href="/admin">Admin</a>
+          {{/if}}
+          </div>
+          <div class="navbar-end">
+          <div class="navbar-item">
+          <div class="buttons">
+          {{#if logged_in}}
+          <a class="button is-info has-text-white logout"><strong>Logout</strong></a>
+          {{else}}
+           <a class="button is-info has-text-white" href="/login"><strong>Login</strong></a>
+          {{/if}}
+          </div>
+          </div>
+          </div>   
+        </div>
       </nav>
-      <h1 class="title is-size-2">Welcome to Helping Heroes!</h1>
     </header>
-
-    <main class="container">
+    <main class="has-background-info p-6">
+      <div>
+      <div class="container">
       {{{body}}}
+    </div>
+      </div>
     </main>
+  </body>
     <script src="/js/logout.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  </body>
-
 </html>

@@ -73,6 +73,7 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
+      req.session.username = userData.username;
       req.session.is_admin = userData.is_admin;
       req.session.is_banned = userData.is_banned;
       res.status(200).json({ user: userData, message: loginMessage});

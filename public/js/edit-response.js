@@ -7,7 +7,9 @@ async function editFormHandler(event) {
     
     const content = document.querySelector('textarea[name="response-content"]').value;
 
-    const response = await fetch(`/api/response/${id}`, {
+    console.log({content})
+
+    const response = await fetch(`/api/responses/${id}`, {
         method: 'PUT',
         body: JSON.stringify({
             content
@@ -18,10 +20,10 @@ async function editFormHandler(event) {
     });
 
     if (response.ok) {
-        document.location.replace('/dashboard/single-post');
+        document.location.replace('/dashboard');
     } else {
         alert(response.statusText);
     }
 }
 
-document.querySelector('.edit-response-form').addEventListener('submit', editFormHandler);
+document.getElementById('edit-response-form').addEventListener('submit', editFormHandler);

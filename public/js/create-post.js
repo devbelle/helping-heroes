@@ -46,31 +46,31 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   //edit response
-  const editResponseForm = document.querySelector('.edit-response-form');
+//   const editResponseForm = document.getElementById('edit-response-form');
 
-  if (editResponseForm) {
-    editResponseForm.addEventListener('submit', async (event) => {
-      event.preventDefault(); // Prevent the default form submission
+//   if (editResponseForm) {
+//     editResponseForm.addEventListener('submit', async (event) => {
+//       event.preventDefault(); // Prevent the default form submission
 
-      const responseContent = editResponseForm.querySelector('textarea[name="response-content"]').value;
-      const responseId = editResponseForm.querySelector('.delete-response-btn').dataset.id;
+//       const responseContent = editResponseForm.querySelector('textarea[name="response-content"]').value;
+//       const responseId = editResponseForm.querySelector('.delete-response-btn').dataset.id;
 
-      const response = await fetch(`/api/responses/${responseId}`, {
-        method: 'PUT',
-        body: JSON.stringify({ content: responseContent }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+//       const response = await fetch(`/api/responses/${responseId}`, {
+//         method: 'PUT',
+//         body: JSON.stringify({ content: responseContent }),
+//         headers: {
+//           'Content-Type': 'application/json'
+//         }
+//       });
 
-      if (response.ok) {
-        alert('Response updated successfully');
-        // You can redirect or reload the page after successful update
-      } else {
-        alert('Failed to update response');
-      }
-    });
-  }
+//       if (response.ok) {
+//         alert('Response updated successfully');
+//         // You can redirect or reload the page after successful update
+//       } else {
+//         alert('Failed to update response');
+//       }
+//     });
+//   }
 
   const deleteResponse = async (event) => {
     const responseId = event.target.dataset.id;

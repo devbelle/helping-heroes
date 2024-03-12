@@ -57,6 +57,7 @@ router.get('/:id', withAuth, async (req, res) => {
 
   // to display output in Insomnia uncomment next line (and log in as a user)
   // res.json(postData);
+  console.log(postData);
 
   // send data to the handlebars template
   res.render('post', {

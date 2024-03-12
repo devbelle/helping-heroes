@@ -8,8 +8,67 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="/css/styles.css" type="text/css" media="screen" />
   </head>
+  <style>
+    @media screen and (max-width: 768px) {
+        .navbar-menu {
+        display: block;
+        background-color: transparent;
+        }
+
+            .navbar-menu .navbar-start,
+            .navbar-menu .navbar-end {
+                flex-direction: column; /* Stack navbar items vertically on smaller screens */
+            }
+
+            .navbar-menu .navbar-start,
+            .navbar-menu .navbar-end .navbar-item {
+                text-align: center; /* Center align navbar items on smaller screens */
+            }
+
+     .search {
+        width: 200px;
+  
+      }
+
+      .ban {
+        width: 1%;
+        height: 1%;
+        font-size: 10px;
+      }
+
+      .table {
+        width: 100%;
+      
+      }
+
+    .user-table {
+    font-size: 10px; /* Decrease the font size of the table content */
+    overflow-x: auto;
+  }
+
+  .user-table table {
+    width: 100%;
+  }
+      
+
+    }
+
+
+    @media screen and (max-width: 320px) {
+      
+        #make {
+        display: none;
+      }
+
+       .search {
+        width: 150px;
+  
+      }
+    }
+  </style>
   <body class="body">
     <header>
+      {{!-- Navbar --}}
       <nav class="navbar mx-3 p-1" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
           <a href="/"><img src="/HelpingHeroesLogo.svg" width="336" height="84"></a>
@@ -17,6 +76,7 @@
         <div id="navbarBasicExample" class="navbar-menu">
           <div class="navbar-start">
           <a class="navbar-item" href="/">Home</a>
+ {{!-- Displays Dashboard if logged in --}}
           {{#if logged_in}}
           <a class="navbar-item" href="/dashboard">My Dashboard</a>
           {{/if}}
@@ -27,8 +87,10 @@
           <div class="navbar-end">
           <div class="navbar-item">
           <div class="buttons">
+        {{!-- Displays Logout Button if logged in --}}
           {{#if logged_in}}
           <a class="button is-info has-text-white logout"><strong>Logout</strong></a>
+          {{!-- Displays Login Button if not logged in --}}
           {{else}}
            <a class="button is-info has-text-white" href="/login"><strong>Login</strong></a>
           {{/if}}

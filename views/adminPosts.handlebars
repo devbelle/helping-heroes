@@ -1,10 +1,15 @@
+
+
 {{#if all}}
+{{!-- If you want to see all posts --}}
 <h1 class="title has-text-centered has-text-white">All Posts</h1>
 {{else}}
+{{!-- If you want to see posts for a particular user --}}
 <h3 class="is-size-4 title">Posts by {{username}}</h3>
 {{/if}}
 <div id="all-posts" class="m-2">
 
+{{!-- Sort By Title, Username, and Date Dropdown menu --}}
     <div class="columns m-1" style="width: 400px;">
         <div class="dropdown my-2" id="dropdown2">
             <div class="dropdown-trigger">
@@ -30,10 +35,10 @@
         </div>
     </div>
 
-
+{{!-- List each post from a user or all posts in database in general on a separate card  --}}
     <div class="list">
         {{#each output as |post|}}
-        <div class="card">
+        <div class="card my-5">
             <div class="card-content">
                 <div class="content">
                     <a href="/posts/{{post.id}}"><h2 class="post-title has-text-danger-dark">{{post.title}}</h2></a>
@@ -49,5 +54,6 @@
     </div>
 
 </div>
+{{!-- JavaScript File and ListJs Src for Page Functionality --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 <script src="/js/adminPosts.js"> </script>

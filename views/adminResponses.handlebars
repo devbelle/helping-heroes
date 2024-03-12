@@ -1,11 +1,13 @@
-
+{{!-- Displays all Responses in database --}}
 {{#if all}}
 <h1 class="title has-text-centered has-text-white">All responses</h1>
 {{else}}
+{{!-- Displays all responses of a particular user --}}
 <h1 class="title has-text-centered has-text-white">Responses by {{username}}</h1>
 {{/if}}
 <div id="all-responses" class="m-2">
 
+{{!-- Sort By Drop Down Menu for Username, Date, and Upvotes --}}
      <div class="columns m-1" style="width: 400px;">
     <div class="dropdown my-2" id="dropdown2">
      <div class="dropdown-trigger">
@@ -24,6 +26,7 @@
 </div>
     </div>
     </div>
+  {{!-- Search bar to search for responses --}}
     <div class="field">
         <div class="control">
         <input type="text" class="search input m-1" placeholder="Search" />
@@ -31,18 +34,25 @@
     </div>
     </div>
 
-
-    <ul class="list">
-        {{#each output as |res|}}
-        <li class="box m-1">
+{{!-- List all responses from database or all from a particular user on individual cards --}}
+    <div class="list">
+      {{#each output as |res|}}
+      <div class="card my-5">
+        <div class="card-content">
+          <div class="content">
             <p class="mb-1">{{res.content}}</p>
             <p class="username mb-1">By {{res.user.username}}</p>
             <p class="date mb-1">Posted on {{format_date res.date}}</p>
             <p class="upvotes mb-1">{{res.upvotes}} upvotes</p>
-            <button class="button delete-response" data-id={{res.id}}>Delete</button>
-        </li>
-        {{/each}}
-    </ul>
+            <button class="button is-info has-text-white delete-response" data-id={{res.id}}>Delete</button>
+        
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    
 </div>
+{{!-- JavaScript File and ListJs Src for Page Functionality --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 <script src="/js/adminResponses.js"> </script>

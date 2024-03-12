@@ -1,13 +1,13 @@
 {{!-- {{> post}} --}}
 {{!-- {{#if loggedIn}} --}}
-<div class="edit-response-form">
+<form id="edit-response-form" class="edit-response-form">
     <div> 
         <h1>{{response.post.title}}</h1>
         <p>{{response.post.content}}</p>
-        <div>
-            {{content}}
-        </div>
-        <textarea name="response-content"></textarea>
+        {{!-- <div>
+            {{response.content}}
+        </div> --}}
+        <textarea name="response-content">{{response.content}}</textArea>
     </div>
 
     <div>
@@ -17,10 +17,11 @@
         <button class="delete-response-btn" data-id="{{response.id}}">DELETE RESPONSE</button>
     </div>
     
-</div>
+</form>
 
 {{!-- {{/if}} --}}
 
 {{!-- {{> comments post.comments}} --}}
-<script src="/public/js/create-post"></script>
+<script src="/js/edit-response.js"></script>
+<script src="/js/create-post.js"></script>
 

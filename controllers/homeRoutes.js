@@ -61,11 +61,13 @@ router.get('/', async (req, res) => {
 
 
 router.get('/login', (req, res) => {
+  //If logged in redirect to homepage
   if (req.session.logged_in) {
     res.redirect('/');
     return;
   }
 
+  //If not logged in, render login page for user
   res.render('login');
 });
 

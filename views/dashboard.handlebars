@@ -1,6 +1,9 @@
+
 <div>
-    <h1>Hello, {{username}}</h1>
+    {{!-- Message welcoming user and stating their usrename --}}
+    <h1 class="title has-text-centered has-text-white mb-5">Hello, {{username}}</h1>
     <section>
+        {{!-- Create New Post --}}
         <div class="card">
             <div class="card-content">
                 <div class="content">
@@ -21,6 +24,7 @@
                         </div>
                     </form>
     </section>
+{{!-- Render All Available Posts by Logged In User --}}
     {{#if posts.length}}
     <section>
         <div class="card my-5">
@@ -47,6 +51,7 @@
     </section>
 
     <section>
+        {{!-- Render All Avaliable Responses by Logged In User --}}
         <div class="card my-5">
             <div class="card-content">
                 <div class="content">
@@ -69,4 +74,5 @@
     </section>
     {{/if}}
                 </div>
+                {{!-- JavaScript File for Page Functionality --}}
                 <script src="/js/create-post.js"></script>
